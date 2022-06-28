@@ -8,10 +8,7 @@ import "./config/mongo.js";
 // socket configuration
 import WebSockets from "./utils/WebSockets.js";
 // routes
-import indexRouter from "./routes/index.js";
-import userRouter from "./routes/user.js";
-import chatRoomRouter from "./routes/chatRoom.js";
-import deleteRouter from "./routes/delete.js";
+import routes from './routes/index.js';
 // middlewares
 import { decode } from "./middlewares/jwt.js";
 
@@ -22,10 +19,10 @@ app.set("port", port);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/", indexRouter);
-app.use("/users", userRouter);
-app.use("/room", decode, chatRoomRouter);
-app.use("/delete", deleteRouter);
+app.use(routes);
+app.get('/', (req, res) => {
+        res.send('Welcome to API chat application');
+});
 
 app.use('*', (req, res) => {
 	return res.status(404).json({
@@ -33,13 +30,12 @@ app.use('*', (req, res) => {
 		message: "API endpoint doesn't exist"
 	});
 });
-
 // Create HTTP server
 const server = http.createServer(app);
 server.listen(port);
 // Create socket connection
 global.io = new Server(server);
-global.io.on('connection', WebSockets.connection);
+global.io.on('connection',WebSockets.connection);
 server.on("listening", () => {
 	console.log(`Listening on port:: http://localhost:${port}/`)
 });

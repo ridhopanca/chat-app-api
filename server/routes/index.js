@@ -1,11 +1,13 @@
 import express from "express";
-import users from "../controllers/user.js";
-import { encode } from "../middlewares/jwt.js";
-
+import auth from "./auth/index.js";
+import user from "./user/index.js";
+import chatRoom from "./chat/index.js";
+import deletes from "./delete/index.js";
+import { decode } from "../middlewares/jwt.js";
 const router = express.Router();
-
-router.post("/login/:userId", encode, (req, res, next) => {
-	return res.status(200).json({success:true, authorization: req.authToken});
-});
+router.use('/api', auth);
+router.use('/api/users', user);
+router.use('/api/room', decode ,chatRoom);
+router.use('/api/delete', deletes);
 
 export default router;

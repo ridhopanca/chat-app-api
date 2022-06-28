@@ -20,6 +20,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(routes);
+app.use(cors());
 app.get('/', (req, res) => {
         res.send('Welcome to API chat application');
 });
@@ -34,7 +35,11 @@ app.use('*', (req, res) => {
 const server = http.createServer(app);
 server.listen(port);
 // Create socket connection
-global.io = new Server(server);
+global.io = new Server(server, {
+	cors : { 
+		origin: "*"
+	}
+});
 global.io.on('connection',WebSockets.connection);
 server.on("listening", () => {
 	console.log(`Listening on port:: http://localhost:${port}/`)

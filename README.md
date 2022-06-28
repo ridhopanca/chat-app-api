@@ -1,7 +1,6 @@
 # API for chatting application
 
-This api is using mongodb as database and (node and express) js as engine.
-this app built for training from this [source](https://www.freecodecamp.org/news/create-a-professional-node-express/).
+This API built using mongodb, node, express. This API built for training purposes from this [source](https://www.freecodecamp.org/news/create-a-professional-node-express/),
 with little modification.
 
 ## Installation

@@ -18,6 +18,23 @@ export default {
 			return res.status(500).json({success: false, error: error});
 		}
 	},
+	onSearchUser: async (req, res) => {
+		try {
+			const validation = makeValidation(types => ({
+				payload: req.body,
+				checks: {
+					name: { type: types.string }
+				}
+			}));
+
+			if(!validation.success) return res.status(400).json(validation);
+			const { name } = req.body;
+			const user = await UserModel.searchUser(name);
+			return res.status(200).json({success:true, user});
+		} catch(error){
+			return res.status(500).json({success: false, error: error});
+		}
+	},
 	onCreateUsers: async (req, res) => {
 		try {
 			const validation = makeValidation(types => ({

@@ -45,6 +45,16 @@ userSchema.statics.getUserById = async function(id) {
 	}
 }
 
+userSchema.statics.searchUser = async function(search) {
+	try {
+		const user = await this.findOne({ firstName: search });
+		if(!user) throw ({ error: 'No user with this name found'});
+		return user;
+	} catch(error) {
+		throw error;
+	}
+}
+
 userSchema.statics.getUsers = async function() {
 	try {
 		const users = await this.find();

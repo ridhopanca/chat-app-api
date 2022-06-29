@@ -58,7 +58,6 @@ export default {
 			const recentConversation = await ChatMessageModel.getRecentConversation(roomIds, options, currentLoggedUser);
 			return res.status(200).json({success:true, conversation: recentConversation});
 		} catch (error) {
-			console.log(error)
 			return res.status(500).json({success:false,error:error});
 		}
 	},
@@ -79,7 +78,6 @@ export default {
 				users,
 			});
 		} catch(error) {
-			console.log(error);
 			return res.status(500).json({success:false, error});
 		}
 	}
@@ -92,8 +90,7 @@ export default {
 			const currentLoggedUser = req.userId;
 			const result = await ChatMessageModel.markMessageRead(roomId, currentLoggedUser);
 			return res.status(200).json({success:true, data: result});
-		} catch(error) {
-			console.log(error);
+		} catch(error) {	
 			return res.status(500).json({success:false, error});
 		}
 	},

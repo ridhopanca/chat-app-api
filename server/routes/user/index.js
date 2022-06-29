@@ -6,6 +6,7 @@ const router = express.Router();
 router
         .get("/", user.onGetAllUsers)
         .post("/", user.onCreateUsers)
+	.post("/search", user.onSearchUser)
         .get("/:id", user.onGetUserById)
         .delete("/:id", user.onDeleteUserById)
 

@@ -108,6 +108,7 @@ chatRoomSchema.statics.getMessageByRoomId = async function(roomIds, options){
 					chatRoomName: {$last: '$name'},
 					messageId: {$last: '$chatMessages._id'},
 					message: {$last: '$chatMessages.message'},
+					messageCreatedAt: {$last: '$chatMessages.createdAt'},
 					type: {$last: '$chatMessages.type'},
 					postedByUser:{$last:'$postedByUser'},
 					createdAt: {$last: '$createdAt'},

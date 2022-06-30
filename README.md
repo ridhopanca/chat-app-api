@@ -1,6 +1,6 @@
 # API for chatting application
 
-This API is built using mongodb, node, express and socket io. This API was created for training purposes on realtime chat. reference [source](https://www.freecodecamp.org/news/create-a-professional-node-express/ this),
+This API is built using mongodb, node, express and socket io. This API was created for training purposes on realtime chat. reference from this [source](https://www.freecodecamp.org/news/create-a-professional-node-express/),
 with a few modifications.
 
 ## Installation

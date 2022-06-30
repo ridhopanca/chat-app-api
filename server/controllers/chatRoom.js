@@ -56,8 +56,9 @@ export default {
 			}
 			const rooms = await ChatRoomModel.getChatRoomsByUserId(currentLoggedUser);
 			const roomIds = rooms.map(room => room._id);
-			const recentConversation = await ChatMessageModel.getRecentConversation(roomIds, options, currentLoggedUser);
-			return res.status(200).json({success:true, conversation: recentConversation});
+			const recentRooms = await ChatRoomModel.getMessageByRoomId(roomIds, options);
+			// const recentConversation = await ChatMessageModel.getRecentConversation(roomIds, options, currentLoggedUser);
+			return res.status(200).json({success:true, conversation: recentRooms});
 		} catch (error) {
 			return res.status(500).json({success:false,error:error});
 		}

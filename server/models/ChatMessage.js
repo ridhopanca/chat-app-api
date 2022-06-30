@@ -176,6 +176,7 @@ chatMessageSchema.statics.getRecentConversation = async function (chatRoomIds, o
 			},
 			{ $unwind: "$roomInfo" },
 			{ $unwind: "$roomInfo.userIds" },
+			{ $unwind: "$roomInfo.name"},
 			//do a join on another table called users
 			{
 				$lookup: {
@@ -199,6 +200,7 @@ chatMessageSchema.statics.getRecentConversation = async function (chatRoomIds, o
 					_id: '$roomInfo._id',
 					messageId: {$last: '$messageId'},
 					chatRoomId: {$last: '$chatRoomId'},
+					chatRoomName: {$last: '$roomInfo.name'},
 					message: {$last: '$message'},
 					type: {$last: '$type'},
 					postedByUser:{$last:'$postedByUser'},

@@ -75,4 +75,52 @@ chatRoomSchema.statics.getChatRoomsByUserId = async function(userId){
 	}
 }
 
+chatRoomSchema.statics.getMessageByRoomId = async function(roomIds, options){
+	try {
+		return this.aggregate([
+			{ $match : { _id: {$in : roomIds} } },
+			// do a join on another table called chatmessages, and 
+			// get me room details
+			{
+				$lookup: {
+					from: 'chatmessages',
+					localField: '_id',
+					foreignField: 'chatRoomId',
+					as: 'chatMessages',
+				}
+			},
+			{ $unwind: {"path" : "$chatMessages","preserveNullAndEmptyArrays": true}},
+			// do a join on another table called users, and,
+			// get me a user whose _id = chatMessages.postedByUser
+			{
+				$lookup: {
+					from: 'users',
+					localField: 'chatMessages.postedByUser',
+					foreignField: '_id',
+					as: 'postedByUser',
+				}
+			},
+			{ $unwind:{"path" : "$postedByUser", "preserveNullAndEmptyArrays": true} },
+			{ 
+				$group: {
+					_id: '$_id',
+					chatRoomId: {$last: '$_id'},
+					chatRoomName: {$last: '$name'},
+					messageId: {$last: '$chatMessages._id'},
+					message: {$last: '$chatMessages.message'},
+					type: {$last: '$chatMessages.type'},
+					postedByUser:{$last:'$postedByUser'},
+					createdAt: {$last: '$createdAt'},
+				}
+			},
+			{ $sort: {createdAt:-1}},
+			// apply pagination
+			{ $skip: options.page * options.limit },
+			{ $limit: options.limit }
+		]);
+	} catch(error) {
+		throw error;
+	}
+}
+
 export default mongoose.model("ChatRoom", chatRoomSchema);

@@ -12,6 +12,7 @@ const chatRoomSchema = new mongoose.Schema(
 			type: String,
 			default: () => uuidv4().replace(/\-/g,""),
 		},
+		name: String,
 		userIds: Array,
 		type: String,
 		chatInitiator: String,
@@ -23,6 +24,7 @@ const chatRoomSchema = new mongoose.Schema(
 );
 
 chatRoomSchema.statics.initiateChat = async function(
+	name,
 	userIds,
 	type, 
 	chatInitiator
@@ -43,7 +45,7 @@ chatRoomSchema.statics.initiateChat = async function(
 			};
 		}
 
-		const newRoom = await this.create({ userIds, type, chatInitiator });
+		const newRoom = await this.create({ name, userIds, type, chatInitiator });
 		return {
 			isNew: true,
 			message: 'creating a new chatroom',

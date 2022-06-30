@@ -8,6 +8,7 @@ export default {
 			const validation = makeValidation( types => ({
 				payload: req.body,
 				checks: {
+					name: {type: types.string },
 					userIds:{
 						type: types.array,
 						options: {unique: true, empty:false, stringOnly:true}
@@ -16,10 +17,10 @@ export default {
 				},
 			}));
 			if(!validation.success) return res.status(400).json({...validation});
-			const { userIds, type } = req.body;
+			const { name, userIds, type } = req.body;
 			const { userId: chatInitiator } = req;
 			const allUserIds = [...userIds, chatInitiator];
-			const chatRoom = await ChatRoomModel.initiateChat(allUserIds, type, chatInitiator);
+			const chatRoom = await ChatRoomModel.initiateChat( name, allUserIds, type, chatInitiator );
 			return res.status(200).json({success:true, chatRoom});
 		} catch(error) {
 			return res.status(500).json({success:false, error:error});

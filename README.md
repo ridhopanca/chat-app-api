@@ -1,7 +1,7 @@
 # API for chatting application
 
-This API built using mongodb, node, express. This API built for training purposes from this [source](https://www.freecodecamp.org/news/create-a-professional-node-express/),
-with little modification.
+This API is built using mongodb, node, express and socket io. This API was created for training purposes on realtime chat. reference [source](https://www.freecodecamp.org/news/create-a-professional-node-express/ this),
+with a few modifications.
 
 ## Installation
 
@@ -44,6 +44,7 @@ Api path local: http://localhost:3000
 
 # create new room chat
 {
+   "name" : "Example Name",
    "userIds" : [":id"],
    "type": "counsumer-to-support" //consumer-to-consumer or consumer-to-support
 }

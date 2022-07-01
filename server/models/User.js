@@ -28,8 +28,10 @@ userSchema.statics.createUser = async function(
 	type
 ) {
 	try {
-		const user = await this.create({ firstName, lastName, type });
-		return user;
+		const user = await this.findOne({ firstName: firstName});
+		if(user) throw ('User with this first name already exists, just use it.');
+		const user2 = await this.create({ firstName, lastName, type });
+		return user2;
 	} catch (error){
 		throw error;
 	}

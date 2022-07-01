@@ -52,7 +52,7 @@ export default {
 			const user = await UserModel.createUser(firstName,lastName,type);
 			return res.status(200).json({success: true, user});
 		} catch (error) {
-			return res.status(500).json({success: false, error:error});
+			return res.status(500).json({success: false, message:error});
 		}
 	},
 	onDeleteUserById: async (req, res) => {
